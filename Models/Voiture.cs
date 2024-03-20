@@ -17,7 +17,7 @@ namespace Models
 
         public override string ToString()
         {
-            return base.ToString() + $"\nPuissance: {this.Puissance}\n";
+            return "\nType: Voiture" + base.ToString() + $"\nPuissance: {this.Puissance}\n";
         }
     }
 }

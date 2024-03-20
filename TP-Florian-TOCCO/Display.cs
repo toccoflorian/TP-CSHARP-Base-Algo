@@ -1,32 +1,10 @@
 ﻿using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace TP_Florian_TOCCO
 {
     internal static class Display
     {
-
-        public static int Start()                  // Propose des choix à l'utilisateur
-        {
-            string choix = "\nQuelle action ?\n";
-            string choix1 = "\n\t1 - Créer un véhicule";
-            string choix2 = "\n\t2 - Voir tous les véhicules";
-            string choix3 = "\n\t3 - Rechercher un véhicule";
-            string choix4 = "\n\t4 - Trier les véhicules";
-            string choix5 = "\n\t5 - Filtrer les véhicules";
-            string choix6 = "\n\t6 - Supprimer un véhicule";
-            string choix7 = "\n\t7 - Sauvegarder les véhicules";
-
-            string menu = choix + choix1 + choix2 + choix3 + choix4 + choix5 + choix6 + choix7;
-
-            int userChoice = ResponseRequest.GetIntResponse(menu);
-            Console.Clear();
-            return userChoice;
-        }
 
         public static void DisplayWrongChoiceMessage()
         {
@@ -67,6 +45,111 @@ namespace TP_Florian_TOCCO
         public static void DisplayAllVehicules()
         {
             foreach (AbstractVehicule vehicule in Garage.Vehicules) Console.WriteLine(vehicule.ToString());
+        }
+
+        public static void DisplayVehiculeByMarque(string marque)
+        {
+            foreach (AbstractVehicule vehicule in Garage.Vehicules
+                .Where(v => v is Voiture && v.Marque.ToLower() == marque.ToLower())
+                .Cast<Voiture>()
+                .ToList()) 
+            {
+                Console.WriteLine(vehicule.ToString());
+            }
+
+            foreach (AbstractVehicule vehicule in Garage.Vehicules
+                .Where(v => v is Camion && v.Marque.ToLower() == marque.ToLower())
+                .Cast<Camion>()
+                .ToList())
+            {
+                Console.WriteLine(vehicule.ToString());
+            }
+            DisplayContinueMessage();
+        }
+
+        public static void DisplayVehiculeByModele(string modele)
+        {
+            foreach (AbstractVehicule vehicule in Garage.Vehicules
+                .Where(v => v is Voiture && v.Modele.ToLower() == modele.ToLower())
+                .Cast<Voiture>()
+                .ToList())
+            {
+                Console.WriteLine(vehicule.ToString());
+            }
+
+            foreach (AbstractVehicule vehicule in Garage.Vehicules
+                .Where(v => v is Camion && v.Modele.ToLower() == modele.ToLower())
+                .Cast<Camion>()
+                .ToList())
+            {
+                Console.WriteLine(vehicule.ToString());
+            }
+            DisplayContinueMessage();
+        }
+
+        public static void DisplayVehiculeByNumero(int numero)
+        {
+            foreach (AbstractVehicule vehicule in Garage.Vehicules
+                .Where(v => v is Voiture && v.Numero == numero)
+                .Cast<Voiture>()
+                .ToList())
+            {
+                Console.WriteLine(vehicule.ToString());
+            }
+
+            foreach (AbstractVehicule vehicule in Garage.Vehicules
+                .Where(v => v is Camion && v.Numero == numero)
+                .Cast<Camion>()
+                .ToList())
+            {
+                Console.WriteLine(vehicule.ToString());
+            }
+            DisplayContinueMessage();
+        }
+
+        public static void DisplayVehiculeByPuissance(int puissance)
+        {
+            List<Voiture> voitures = Garage.Vehicules.Where(v => v is Voiture).Cast<Voiture>().ToList();
+            foreach (Voiture voiture in voitures.Where(v => v.Puissance == puissance)) 
+            {
+                Console.WriteLine(voiture);
+            }
+            DisplayContinueMessage();
+        }
+
+        public static void DisplayVehiculeByPoids(int poids)
+        {
+            List<Camion> camions = Garage.Vehicules.Where(c => c is Camion).Cast<Camion>().ToList();
+            foreach (Camion camion in camions.Where(c => c.Poids == poids))
+            {
+                Console.WriteLine(camion);
+            }
+            DisplayContinueMessage();
+        }
+
+        public static void DisplayVehiculeByType(int userChoise)
+        {
+            switch (userChoise)
+            {
+                case 1:     // Voiture
+                    foreach (AbstractVehicule v in Garage.Vehicules.Where(v => v is Voiture).ToList())
+                    {
+                        Voiture voiture = (Voiture)v;
+                        Console.WriteLine(voiture.ToString());
+                    }
+                    break;
+                case 2:     // Camion
+                    foreach (AbstractVehicule v in Garage.Vehicules.Where(v => v is Camion).ToList())
+                    {
+                        Camion camion = (Camion)v;
+                        Console.WriteLine(camion.ToString());
+                    }
+                    break;
+                default:
+                    Display.DisplayWrongChoiceMessage();
+                    break;
+            }
+            DisplayContinueMessage();
         }
     }
 }

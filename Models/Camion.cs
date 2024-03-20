@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Models
 {
     public class Camion : AbstractVehicule
@@ -20,7 +15,7 @@ namespace Models
 
         public override string ToString()
         {
-            return base.ToString() + $"\nPoids: {this.Poids}\n";
+            return "\nType: Camion" + base.ToString() + $"\nPoids: {this.Poids}\n";
         }
     }
 }
